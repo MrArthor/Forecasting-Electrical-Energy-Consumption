@@ -16,7 +16,8 @@ import seaborn as sns  # Statistical data visualization
 from sklearn.preprocessing import RobustScaler, StandardScaler, MinMaxScaler  # Data scaling
 from sklearn.model_selection import train_test_split  # Splitting data into train and test sets
 from sklearn.metrics import mean_squared_error  # Model evaluation metric
-
+from sklearn.preprocessing import PowerTransformer
+from scipy.stats import boxcox
 # Statsmodels imports for time series analysis
 from statsmodels.tsa.stattools import adfuller, kpss  # Statistical tests for stationarity
 from statsmodels.tsa.arima.model import ARIMA  # ARIMA model
@@ -48,12 +49,22 @@ data['Datetime'] = pd.to_datetime(data['Datetime'], format='%Y-%m-%d %H:%M:%S', 
 data.set_index('Datetime', inplace=True)
 data['TotalPowerConsumption']= data['PowerConsumption_Zone1'] + data['PowerConsumption_Zone2'] + data['PowerConsumption_Zone3']
 data= data.drop(['PowerConsumption_Zone1','PowerConsumption_Zone2','PowerConsumption_Zone3'],axis=1)
+def apply_transformations(data):
+    
+    data['Temperature'], _ = boxcox(data['Temperature'])
+    data['WindSpeed'], _ = boxcox(data['WindSpeed'])
+    data['GeneralDiffuseFlows'], _ = boxcox(data['GeneralDiffuseFlows'])
+    data['DiffuseFlows'], _ = boxcox(data['DiffuseFlows'])
+    data['TotalPowerConsumption'], _ = boxcox(data['TotalPowerConsumption'])
 
+    pt = PowerTransformer(method='yeo-johnson')
+    data['Humidity'] = pt.fit_transform(data[['Humidity']])
+            
+    return data
 Scaler = StandardScaler()
-x = data.drop(['TotalPowerConsumption'], axis=1)
-y = data['TotalPowerConsumption']
-x_scaled = Scaler.fit_transform(x)
-x_train,x_test,y_train,y_test= train_test_split(x,y,test_size=0.2,shuffle=False)
+# apply_transformations(data)
+
+#x = data.drop(['TotalPowerConsumption'], axis=1)
 
 # Set page configuration
 st.set_page_config(page_title='Electric Power Consumption Forecasting', page_icon=':zap:', layout='wide', initial_sidebar_state='expanded')
@@ -117,6 +128,7 @@ if page == 'HOME':
 ####################################################################################################
 
 elif page == 'Box Plots':
+    
     def plot_numeric_boxplots(df, cols_per_row=3):
         """
         Create box plots for numeric columns in a DataFrame, arranged in multiple rows.
@@ -473,6 +485,11 @@ elif page == 'Ad Fuller Report':
 ####################################################################################################
 
 elif page == 'ARIMA MODEL':
+    Data_Ar=apply_transformations(data)
+    
+    x = Data_Ar.drop(['TotalPowerConsumption'], axis=1)
+    y = Data_Ar['TotalPowerConsumption']
+    x_train,x_test,y_train,y_test= train_test_split(x,y,test_size=0.2,shuffle=False)
 
     st.header('📊 ARIMA Model')
 
@@ -508,15 +525,15 @@ elif page == 'ARIMA MODEL':
         mae = mean_absolute_error(y_true, y_pred)
         rmse = np.sqrt(mse)
         r2 = r2_score(y_true, y_pred)
-
+        # print(mse, mae, rmse, r2)
         return mse, mae, rmse, r2
 
     mse, mae, rmse, r2 = calculate_all_metrics(y_test, arima_pred)
     st.subheader('Model Evaluation Metrics')
-    st.write(f'Mean Squared Error (ARIMA): {round(mse,5)}')
-    st.write(f'Mean Absolute Error (ARIMA): {round(mae,5)}')
-    st.write(f'Root Mean Squared Error (ARIMA): {round(rmse,5)}')
-    st.write(f'R-squared (ARIMA): {round(r2,5)}')
+    st.write(f'Mean Squared Error (ARIMA): {mse}')
+    st.write(f'Mean Absolute Error (ARIMA): {mae}')
+    st.write(f'Root Mean Squared Error (ARIMA): {rmse}')
+    st.write(f'R-squared (ARIMA): {r2}')
 
     def plot_residuals(auto_model):
         """
@@ -564,6 +581,13 @@ elif page == 'ARIMA MODEL':
 ####################################################################################################
 
 elif page == 'SARIMA MODEL':
+
+    Data_Ar=apply_transformations(data)
+    
+    x = Data_Ar.drop(['TotalPowerConsumption'], axis=1)
+    y = Data_Ar['TotalPowerConsumption']
+    x_train,x_test,y_train,y_test= train_test_split(x,y,test_size=0.2,shuffle=False)
+
     st.header('📊 SARIMA Model')
     def SARIMAX(tru):
         if os.path.exists('../Models/search_sarima_model_auto.pkl') and tru:
@@ -596,20 +620,24 @@ elif page == 'SARIMA MODEL':
 
     mse, mae, rmse, r2 = calculate_all_metrics(y_test, sarimax_pred)
     st.subheader('Model Evaluation Metrics')
-    st.write(f'Mean Squared Error (SARIMAX): {round(mse,5)}')
-    st.write(f'Mean Absolute Error (SARIMAX): {round(mae,5)}')
-    st.write(f'Root Mean Squared Error (SARIMAX): {round(rmse,5)}')
-    st.write(f'R-squared (SARIMAX): {round(r2,5)}')
+    st.write(f'Mean Squared Error (SARIMAX): {mse}')
+    st.write(f'Mean Absolute Error (SARIMAX): {mae}')
+    st.write(f'Root Mean Squared Error (SARIMAX): {rmse}')
+    st.write(f'R-squared (SARIMAX): {r2}')
 
     distinct_counts = len(np.unique(sarimax_pred))
 
-    st.subheader('Distinct Predictions')
-    st.write(f'Total distinct predictions: {distinct_counts}')
+    # st.subheader('Distinct Predictions')
+    # st.write(f'Total distinct predictions: {distinct_counts}')
 
 ####################################################################################################
 
 elif page == 'EVALUATE REGRESSION MODEL':
-
+    Data_Ar=apply_transformations(data)
+    
+    x = Data_Ar.drop(['TotalPowerConsumption'], axis=1)
+    y = Data_Ar['TotalPowerConsumption']
+    x_train,x_test,y_train,y_test= train_test_split(x,y,test_size=0.2,shuffle=False)
     st.header('📊 Evaluate Regression Models')
 
     # CALLING ARMIA MODEL
@@ -797,6 +825,9 @@ elif page == 'EVALUATE REGRESSION MODEL':
 ####################################################################################################
 
 elif page == 'TBATS MODEL':
+    
+    # x_train,x_test,y_train,y_test= train_test_split(x,y,test_size=0.2,shuffle=False)
+
     st.header('📊 TBATS Model')
     
     train = y[:'2018-09-30 23:50:00']
@@ -989,8 +1020,8 @@ elif page == 'TBATS MODEL':
 
     # Error plot
     fig.add_trace(go.Scatter(
-        x=err['2017-03-01 00:00:00':'2017-03-06 23:50:00'].index,
-        y=err['2017-03-01 00:00:00':'2017-03-06 23:50:00'],
+        x=err['2018-03-01 00:00:00':'2018-03-06 23:50:00'].index,
+        y=err['2018-03-01 00:00:00':'2018-03-06 23:50:00'],
         mode='markers',
         name='Errors',
         marker=dict(color='blue')
