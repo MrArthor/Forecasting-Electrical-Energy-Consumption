@@ -43,7 +43,7 @@ warnings.filterwarnings("ignore")
 
 # Load the data
 
-data = pd.read_csv('C:/Users/marmi/OneDrive/Documents/Power Consumption Project/expanded_dataset.csv')
+data = pd.read_csv('../../Dataset/expanded_dataset.csv')
 data['Datetime'] = pd.to_datetime(data['Datetime'], format='%Y-%m-%d %H:%M:%S', errors='coerce')
 data.set_index('Datetime', inplace=True)
 data['TotalPowerConsumption']= data['PowerConsumption_Zone1'] + data['PowerConsumption_Zone2'] + data['PowerConsumption_Zone3']
@@ -112,7 +112,7 @@ import plotly.graph_objects as go
 ####################################################################################################
 if page == 'HOME':
     st.header("Save Energy, Save Money, Save the Planet")
-    st.video('C:/Users/marmi/OneDrive/Documents/Power Consumption Project/Electric.mp4')
+    st.video('./Electric.mp4')
 
 ####################################################################################################
 
@@ -476,7 +476,7 @@ elif page == 'ARIMA MODEL':
 
     st.header('📊 ARIMA Model')
 
-    path = 'C:/Users/marmi/OneDrive/Documents/Power Consumption Project/search_arima_model_auto.pkl'
+    path = '../Models/search_sarima_model_auto.pkl'
     if os.path.exists(path):
         st.text("Model already trained and saved at : ")
         st.text(path)
@@ -566,14 +566,14 @@ elif page == 'ARIMA MODEL':
 elif page == 'SARIMA MODEL':
     st.header('📊 SARIMA Model')
     def SARIMAX(tru):
-        if os.path.exists('C:/Users/marmi/OneDrive/Documents/Power Consumption Project/search_sarima_model_auto.pkl') and tru:
+        if os.path.exists('../Models/search_sarima_model_auto.pkl') and tru:
             st.text("Model already trained and saved at ")
-            st.text('C:/Users/marmi/OneDrive/Documents/Power Consumption Project/search_sarima_model_auto.pkl')
-            with open('C:/Users/marmi/OneDrive/Documents/Power Consumption Project/search_sarima_model_auto.pkl', 'rb') as pkl_file:
+            st.text('../Models/search_sarima_model_auto.pkl')
+            with open('../Models/search_sarima_model_auto.pkl', 'rb') as pkl_file:
                 auto_model = pickle.load(pkl_file)
         else:
             auto_model = pm.auto_arima(y_train,d=1, seasonal=True, trace=True, error_action='ignore',suppress_warnings=True)
-            with open('C:/Users/marmi/OneDrive/Documents/Power Consumption Project/search_sarima_model_auto.pkl', 'wb') as pkl_file:
+            with open('../Models/search_sarima_model_auto.pkl', 'wb') as pkl_file:
                 pickle.dump(auto_model, pkl_file)
         return auto_model
 
@@ -613,7 +613,7 @@ elif page == 'EVALUATE REGRESSION MODEL':
     st.header('📊 Evaluate Regression Models')
 
     # CALLING ARMIA MODEL
-    path = 'C:/Users/marmi/OneDrive/Documents/Power Consumption Project/search_arima_model_auto.pkl'
+    path = '../Models/search_arima_model_auto.pkl'
     if os.path.exists(path):
         #st.text("Model already trained and saved at : ")
         #st.text(path)
@@ -638,14 +638,14 @@ elif page == 'EVALUATE REGRESSION MODEL':
 
     # CALLING SARIMA MODEL
     def SARIMAX(tru):
-        if os.path.exists('C:/Users/marmi/OneDrive/Documents/Power Consumption Project/search_sarima_model_auto.pkl') and tru:
+        if os.path.exists('../Models/search_sarima_model_auto.pkl') and tru:
             #st.text("Model already trained and saved at ")
             #st.text('C:/Users/marmi/OneDrive/Documents/Power Consumption Project/search_sarima_model_auto.pkl')
-            with open('C:/Users/marmi/OneDrive/Documents/Power Consumption Project/search_sarima_model_auto.pkl', 'rb') as pkl_file:
+            with open('../Models/search_sarima_model_auto.pkl', 'rb') as pkl_file:
                 auto_model = pickle.load(pkl_file)
         else:
             auto_model = pm.auto_arima(y_train,d=1, seasonal=True, trace=True, error_action='ignore',suppress_warnings=True)
-            with open('C:/Users/marmi/OneDrive/Documents/Power Consumption Project/search_sarima_model_auto.pkl', 'wb') as pkl_file:
+            with open('../Models/search_sarima_model_auto.pkl', 'wb') as pkl_file:
                 pickle.dump(auto_model, pkl_file)
         return auto_model
 
@@ -805,14 +805,14 @@ elif page == 'TBATS MODEL':
     #MODEL
     estimator = TBATS(seasonal_periods=[144, 1008], use_trend=False)
 
-    if os.path.exists('C:/Users/marmi/OneDrive/Documents/Power Consumption Project/search_tvats_model_auto.pkl'):
+    if os.path.exists('../Models/search_tvats_model_auto.pkl'):
         st.write("Model already trained and saved at ")
-        st.write('C:/Users/marmi/OneDrive/Documents/Power Consumption Project/search_tvats_model_auto.pkl')
-        with open('C:/Users/marmi/OneDrive/Documents/Power Consumption Project/search_tvats_model_auto.pkl', 'rb') as pkl_file:
+        st.write('../Models/search_tvats_model_auto.pkl')
+        with open('../Models/search_tvats_model_auto.pkl', 'rb') as pkl_file:
             fitted_model = pickle.load(pkl_file)
     else:
         fitted_model = estimator.fit(train)
-        with open('C:/Users/marmi/OneDrive/Documents/Power Consumption Project/search_tvats_model_auto.pkl', 'wb') as pkl_file:
+        with open('../Models/search_tvats_model_auto.pkl', 'wb') as pkl_file:
             pickle.dump(fitted_model, pkl_file)
 
     st.subheader('TBATS Model Summary')
