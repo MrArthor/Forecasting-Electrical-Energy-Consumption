@@ -857,7 +857,10 @@ elif page == 'TBATS MODEL':
     st.code(fitted_model.summary(), language='python')
 
     st.subheader("TBATS Model Metrics")
-    st.image('./Backup_material/TBATS_Metric_Results.jpg')
+    st.write(f'Mean Squared Error: 0.026053549599640114')
+    st.write(f'Mean Absolute Error: 0.1355797820041179')
+    st.write(f'Root Mean Squared Error: 0.16141111981409495')
+    st.write(f'R-squared: -0.3811087761010432')
 
     st.subheader("TBATS Model Forecast")
     st.image('./Backup_material/TBATS_Forecasting.jpg')
