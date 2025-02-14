@@ -108,11 +108,11 @@ with st.sidebar:
                         options = ['HOME','Box Plots' ,'Total Power Consumption Outlier Detection', 
                         'Data Distribution' , 'Time Series Analysis',
                         'Ad Fuller Report','ARIMA MODEL','SARIMA MODEL',
-                        'EVALUATE REGRESSION MODEL','TBATS MODEL'],
+                        'EVALUATE REGRESSION MODEL','TBATS MODEL','BI DASHBOARD'],
                         icons = ['house-gear-fill','boxes','power','bar-chart-line',
                         'clock','file-earmark-bar-graph',
                         'file-earmark-bar-graph','file-earmark-bar-graph',
-                        'file-earmark-bar-graph','file-earmark-bar-graph'],
+                        'file-earmark-bar-graph','file-earmark-bar-graph','file-earmark-bar-graph'],
                         menu_icon = "amd",
                         )
 
@@ -1052,3 +1052,17 @@ elif page == 'TBATS MODEL':
 
     # Show plot in Streamlit
     st.plotly_chart(fig)
+    
+####################################################################################################
+
+elif page == 'BI DASHBOARD':
+
+    st.header('📊 Business Intelligence Dashboard')
+    # Power BI embed URL
+    power_bi_url = "https://app.powerbi.com/reportEmbed?reportId=84c4e97b-18d1-41b8-b3db-25722d7788ac&autoAuth=true&ctid=6d4830a5-22e7-41cc-9c65-6c1781f1d6c7"
+
+    # Embed Power BI dashboard using an HTML iframe
+    st.components.v1.html(
+        f'<iframe title="Corrected BI Dashboard" width="1500" height="600" src="{power_bi_url}" frameborder="0" allowFullScreen="true"></iframe>',
+        height=550  # Adjust height to fit properly
+    )
