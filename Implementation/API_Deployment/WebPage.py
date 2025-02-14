@@ -1,4 +1,5 @@
 # IMPORTING LIBRARIES
+# export PATH="$PATH:/c/Users/vansh/AppData/Roaming/Python/Python312/Scripts"
 
 import streamlit as st
 from streamlit_option_menu import option_menu
@@ -45,7 +46,7 @@ warnings.filterwarnings("ignore")
 # Load the data
 
 data = pd.read_csv('../../Dataset/expanded_dataset.csv')
-data['Datetime'] = pd.to_datetime(data['Datetime'], format='%Y-%m-%d %H:%M:%S', errors='coerce')
+data['Datetime'] = pd.to_datetime(data['Datetime'],  errors='coerce')
 data.set_index('Datetime', inplace=True)
 data['TotalPowerConsumption']= data['PowerConsumption_Zone1'] + data['PowerConsumption_Zone2'] + data['PowerConsumption_Zone3']
 data= data.drop(['PowerConsumption_Zone1','PowerConsumption_Zone2','PowerConsumption_Zone3'],axis=1)
@@ -826,10 +827,11 @@ elif page == 'EVALUATE REGRESSION MODEL':
 
 elif page == 'TBATS MODEL':
     
-    # x_train,x_test,y_train,y_test= train_test_split(x,y,test_size=0.2,shuffle=False)
 
     st.header('📊 TBATS Model')
-    
+    Data_Ar=apply_transformations(data)
+    x = Data_Ar.drop(['TotalPowerConsumption'], axis=1)
+    y = Data_Ar['TotalPowerConsumption']
     train = y[:'2018-09-30 23:50:00']
     test = y['2018-10-01 00:00:00':]
 
