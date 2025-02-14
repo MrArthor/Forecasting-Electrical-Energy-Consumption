@@ -686,77 +686,76 @@ elif page == 'EVALUATE REGRESSION MODEL':
 
     # FUNCTION FOR EVALUATING REGRESSION MODEL
     def evaluate_regression_models(x_test, y_test, arima_pred, sarimax_pred, step=5000):
-        """
-        Evaluate regression models and plot the results using Plotly.
+            """
+            Evaluate regression models and plot the results using Plotly.
 
-        Parameters:
-        x_test (pd.Index): Index of the test set.
-        y_test (pd.Series): Actual values of the test set.
-        arima_pred (pd.Series): Predicted values from the ARIMA model.
-        sarimax_pred (pd.Series): Predicted values from the SARIMAX model.
-        step (int): Step size for downsampling the data for plotting.
-        """
-        # Downsample data
-        x_subset = x_test[::step]
-        y_subset = y_test[::step]
-        arima_subset = arima_pred[::step]
-        sarimax_subset = sarimax_pred[::step]
+            Parameters:
+            x_test (pd.Index): Index of the test set.
+            y_test (pd.Series): Actual values of the test set.
+            arima_pred (pd.Series): Predicted values from the ARIMA model.
+            sarimax_pred (pd.Series): Predicted values from the SARIMAX model.
+            step (int): Step size for downsampling the data for plotting.
+            """
+            # Downsample data
+            x_subset = x_test[::step]
+            y_subset = y_test[::step]
+            arima_subset = arima_pred[::step]
+            sarimax_subset = sarimax_pred[::step]
 
-        # Create figure
-        fig = go.Figure()
+            # Create figure
+            fig = go.Figure()
 
-        # Plot actual values
-        fig.add_trace(go.Scatter(
-            x=x_subset,
-            y=y_subset,
-            mode='lines+markers',
-            name='Actual',
-            line=dict(color='black'),
-            marker=dict(symbol='circle', size=6, opacity=0.6)
-        ))
+            # Plot actual values
+            fig.add_trace(go.Scatter(
+                x=x_subset,
+                y=y_subset,
+                mode='lines+markers',
+                name='Actual',
+                line=dict(color='green'),  # Change color to green
+                marker=dict(symbol='circle', size=6, opacity=0.6)
+            ))
 
-        # Plot ARIMA forecast
-        fig.add_trace(go.Scatter(
-            x=x_subset,
-            y=arima_subset,
-            mode='lines+markers',
-            name='ARIMA Forecast',
-            line=dict(color='blue', dash='dash'),
-            marker=dict(symbol='square', size=6, opacity=0.8)
-        ))
+            # Plot ARIMA forecast
+            fig.add_trace(go.Scatter(
+                x=x_subset,
+                y=arima_subset,
+                mode='lines+markers',
+                name='ARIMA Forecast',
+                line=dict(color='blue', dash='dash'),
+                marker=dict(symbol='square', size=6, opacity=0.8)
+            ))
 
-        # Plot SARIMAX forecast
-        fig.add_trace(go.Scatter(
-            x=x_subset,
-            y=sarimax_subset,
-            mode='lines+markers',
-            name='SARIMAX Forecast',
-            line=dict(color='orange', dash='dot'),
-            marker=dict(symbol='diamond', size=6, opacity=0.8)
-        ))
+            # Plot SARIMAX forecast
+            fig.add_trace(go.Scatter(
+                x=x_subset,
+                y=sarimax_subset,
+                mode='lines+markers',
+                name='SARIMAX Forecast',
+                line=dict(color='orange', dash='dot'),
+                marker=dict(symbol='diamond', size=6, opacity=0.8)
+            ))
 
-        # Update layout
-        fig.update_layout(
-            title='Forecast vs Actuals',
-            xaxis_title='Time Periods',
-            yaxis_title='Power Consumption',
-            xaxis=dict(tickangle=30),
-            legend=dict(x=0, y=1),
-            height=600,
-            width=1000,
-            xaxis_showgrid=True,
-            yaxis_showgrid=True,
-            xaxis_gridcolor='rgba(0,0,0,0.1)',
-            yaxis_gridcolor='rgba(0,0,0,0.1)',
-            xaxis_griddash='dash',
-            yaxis_griddash='dash',
-            plot_bgcolor='black',
-            paper_bgcolor='black',
-            font=dict(color='white')
-        )
-        # Show the figure in Streamlit
-        st.plotly_chart(fig)
-    
+            # Update layout
+            fig.update_layout(
+                title='Forecast vs Actuals',
+                xaxis_title='Time Periods',
+                yaxis_title='Power Consumption',
+                xaxis=dict(tickangle=30),
+                legend=dict(x=0, y=1),
+                height=600,
+                width=1000,
+                xaxis_showgrid=True,
+                yaxis_showgrid=True,
+                xaxis_gridcolor='rgba(0,0,0,0.1)',
+                yaxis_gridcolor='rgba(0,0,0,0.1)',
+                xaxis_griddash='dash',
+                yaxis_griddash='dash',
+                plot_bgcolor='black',
+                paper_bgcolor='black',
+                font=dict(color='white')
+            )
+            # Show the figure in Streamlit
+            st.plotly_chart(fig)
     st.subheader('Forecast vs Actuals')
     evaluate_regression_models(x_test.index, y_test, arima_pred, sarimax_pred, step=5000)
 
