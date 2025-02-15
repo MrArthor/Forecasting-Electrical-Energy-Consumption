@@ -52,17 +52,16 @@ data['TotalPowerConsumption']= data['PowerConsumption_Zone1'] + data['PowerConsu
 data= data.drop(['PowerConsumption_Zone1','PowerConsumption_Zone2','PowerConsumption_Zone3'],axis=1)
 def apply_transformations(data):
     
-    data['Temperature'], _ = boxcox(data['Temperature'])
-    data['WindSpeed'], _ = boxcox(data['WindSpeed'])
-    data['GeneralDiffuseFlows'], _ = boxcox(data['GeneralDiffuseFlows'])
-    data['DiffuseFlows'], _ = boxcox(data['DiffuseFlows'])
-    data['TotalPowerConsumption'], _ = boxcox(data['TotalPowerConsumption'])
-
+    data['Temperature'], lambda_boxcox = boxcox(data['Temperature'])
     pt = PowerTransformer(method='yeo-johnson')
     data['Humidity'] = pt.fit_transform(data[['Humidity']])
-            
+    data['WindSpeed'], lambda_boxcox = boxcox(data['WindSpeed'])
+    data['GeneralDiffuseFlows'], lambda_boxcox = boxcox(data['GeneralDiffuseFlows'])
+    data['DiffuseFlows'], lambda_boxcox = boxcox(data['DiffuseFlows'])
+    data['TotalPowerConsumption'], lambda_boxcox = boxcox(data['TotalPowerConsumption'])
     return data
-Scaler = StandardScaler()
+
+# Scaler = StandardScaler()
 # apply_transformations(data)
 
 #x = data.drop(['TotalPowerConsumption'], axis=1)
@@ -666,23 +665,26 @@ elif page == 'EVALUATE REGRESSION MODEL':
     arima_pred = a_auto_model.predict(n_periods=len(y_test))
 
     # CALLING SARIMA MODEL
-    def SARIMAX(tru):
-        if os.path.exists('../Models/search_sarima_model_auto.pkl') and tru:
-            #st.text("Model already trained and saved at ")
-            #st.text('C:/Users/marmi/OneDrive/Documents/Power Consumption Project/search_sarima_model_auto.pkl')
-            with open('../Models/search_sarima_model_auto.pkl', 'rb') as pkl_file:
-                auto_model = pickle.load(pkl_file)
-        else:
-            auto_model = pm.auto_arima(y_train,d=1, seasonal=True, trace=True, error_action='ignore',suppress_warnings=True)
-            with open('../Models/search_sarima_model_auto.pkl', 'wb') as pkl_file:
-                pickle.dump(auto_model, pkl_file)
-        return auto_model
+    def SARIMAX():
+        s = 4
+        p = 1
+        q = 1
+        d = 0
+        P = 0
+        Q = 1
+        D = 1
+        model = ARIMA(y_train, order=(p,d,q), seasonal_order=(P,D,Q,s))
+        model = model.fit(y_train)
+        return model
+    model = SARIMAX()
+    sarimax_pred = model.get_prediction(start=0, end=len(y_test)-1)
+    sarimax_pred = sarimax_pred.predicted_meansarimax_pred_values = sarimax_pred.predicted_mean
 
-    auto_model = SARIMAX(True)
 
-    auto_model.fit(y_train)
 
-    sarimax_pred = auto_model.predict(n_periods=len(y_test))
+
+
+    
 
     # FUNCTION FOR EVALUATING REGRESSION MODEL
     def evaluate_regression_models(x_test, y_test, arima_pred, sarimax_pred, step=5000):
@@ -757,7 +759,7 @@ elif page == 'EVALUATE REGRESSION MODEL':
             # Show the figure in Streamlit
             st.plotly_chart(fig)
     st.subheader('Forecast vs Actuals')
-    evaluate_regression_models(x_test.index, y_test, arima_pred, sarimax_pred, step=5000)
+    evaluate_regression_models(x_test.index, y_test, arima_pred, sarimax_pred, step=750)
 
     # Select the last 'num_obs' observations
     num_obs = 10  # Adjust as needed
@@ -826,7 +828,7 @@ elif page == 'EVALUATE REGRESSION MODEL':
 
 elif page == 'TBATS MODEL':
     
-
+    
     st.header('📊 TBATS Model')
     Data_Ar=apply_transformations(data)
     x = Data_Ar.drop(['TotalPowerConsumption'], axis=1)

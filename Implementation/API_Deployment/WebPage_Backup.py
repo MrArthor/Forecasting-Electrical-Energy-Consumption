@@ -665,100 +665,101 @@ elif page == 'EVALUATE REGRESSION MODEL':
     arima_pred = a_auto_model.predict(n_periods=len(y_test))
 
     # CALLING SARIMA MODEL
-    def SARIMAX(tru):
-        if os.path.exists('../Models/search_sarima_model_auto.pkl') and tru:
-            #st.text("Model already trained and saved at ")
-            #st.text('C:/Users/marmi/OneDrive/Documents/Power Consumption Project/search_sarima_model_auto.pkl')
-            with open('../Models/search_sarima_model_auto.pkl', 'rb') as pkl_file:
-                auto_model = pickle.load(pkl_file)
-        else:
-            auto_model = pm.auto_arima(y_train,d=1, seasonal=True, trace=True, error_action='ignore',suppress_warnings=True)
-            with open('../Models/search_sarima_model_auto.pkl', 'wb') as pkl_file:
-                pickle.dump(auto_model, pkl_file)
-        return auto_model
+    def SARIMAX():
+        s = 4
+        p = 1
+        q = 1
+        d = 0
+        P = 0
+        Q = 1
+        D = 1
+        model = ARIMA(y_train, order=(p,d,q), seasonal_order=(P,D,Q,s))
+        model = model.fit(low_memory=True)
+        return model
+    model = SARIMAX()
+    sarimax_pred = model.get_prediction(start=0, end=len(y_test)-1)
+    sarimax_pred = sarimax_pred.predicted_meansarimax_pred_values = sarimax_pred.predicted_mean
 
-    auto_model = SARIMAX(True)
 
-    auto_model.fit(y_train)
 
-    sarimax_pred = auto_model.predict(n_periods=len(y_test))
+
+
+    
 
     # FUNCTION FOR EVALUATING REGRESSION MODEL
     def evaluate_regression_models(x_test, y_test, arima_pred, sarimax_pred, step=5000):
-        """
-        Evaluate regression models and plot the results using Plotly.
+            """
+            Evaluate regression models and plot the results using Plotly.
 
-        Parameters:
-        x_test (pd.Index): Index of the test set.
-        y_test (pd.Series): Actual values of the test set.
-        arima_pred (pd.Series): Predicted values from the ARIMA model.
-        sarimax_pred (pd.Series): Predicted values from the SARIMAX model.
-        step (int): Step size for downsampling the data for plotting.
-        """
-        # Downsample data
-        x_subset = x_test[::step]
-        y_subset = y_test[::step]
-        arima_subset = arima_pred[::step]
-        sarimax_subset = sarimax_pred[::step]
+            Parameters:
+            x_test (pd.Index): Index of the test set.
+            y_test (pd.Series): Actual values of the test set.
+            arima_pred (pd.Series): Predicted values from the ARIMA model.
+            sarimax_pred (pd.Series): Predicted values from the SARIMAX model.
+            step (int): Step size for downsampling the data for plotting.
+            """
+            # Downsample data
+            x_subset = x_test[::step]
+            y_subset = y_test[::step]
+            arima_subset = arima_pred[::step]
+            sarimax_subset = sarimax_pred[::step]
 
-        # Create figure
-        fig = go.Figure()
+            # Create figure
+            fig = go.Figure()
 
-        # Plot actual values
-        fig.add_trace(go.Scatter(
-            x=x_subset,
-            y=y_subset,
-            mode='lines+markers',
-            name='Actual',
-            line=dict(color='Cyan'),
-            marker=dict(symbol='circle', size=6, opacity=0.6)
-        ))
+            # Plot actual values
+            fig.add_trace(go.Scatter(
+                x=x_subset,
+                y=y_subset,
+                mode='lines+markers',
+                name='Actual',
+                line=dict(color='green'),  # Change color to green
+                marker=dict(symbol='circle', size=6, opacity=0.6)
+            ))
 
-        # Plot ARIMA forecast
-        fig.add_trace(go.Scatter(
-            x=x_subset,
-            y=arima_subset,
-            mode='lines+markers',
-            name='ARIMA Forecast',
-            line=dict(color='blue', dash='dash'),
-            marker=dict(symbol='square', size=6, opacity=0.8)
-        ))
+            # Plot ARIMA forecast
+            fig.add_trace(go.Scatter(
+                x=x_subset,
+                y=arima_subset,
+                mode='lines+markers',
+                name='ARIMA Forecast',
+                line=dict(color='blue', dash='dash'),
+                marker=dict(symbol='square', size=6, opacity=0.8)
+            ))
 
-        # Plot SARIMAX forecast
-        fig.add_trace(go.Scatter(
-            x=x_subset,
-            y=sarimax_subset,
-            mode='lines+markers',
-            name='SARIMAX Forecast',
-            line=dict(color='orange', dash='dot'),
-            marker=dict(symbol='diamond', size=6, opacity=0.8)
-        ))
+            # Plot SARIMAX forecast
+            fig.add_trace(go.Scatter(
+                x=x_subset,
+                y=sarimax_subset,
+                mode='lines+markers',
+                name='SARIMAX Forecast',
+                line=dict(color='orange', dash='dot'),
+                marker=dict(symbol='diamond', size=6, opacity=0.8)
+            ))
 
-        # Update layout
-        fig.update_layout(
-            title='Forecast vs Actuals',
-            xaxis_title='Time Periods',
-            yaxis_title='Power Consumption',
-            xaxis=dict(tickangle=30),
-            legend=dict(x=0, y=1),
-            height=600,
-            width=1000,
-            xaxis_showgrid=True,
-            yaxis_showgrid=True,
-            xaxis_gridcolor='rgba(0,0,0,0.1)',
-            yaxis_gridcolor='rgba(0,0,0,0.1)',
-            xaxis_griddash='dash',
-            yaxis_griddash='dash',
-            plot_bgcolor='black',
-            paper_bgcolor='black',
-            font=dict(color='white')
-        )
-        # Show the figure in Streamlit
-        st.plotly_chart(fig)
-    
+            # Update layout
+            fig.update_layout(
+                title='Forecast vs Actuals',
+                xaxis_title='Time Periods',
+                yaxis_title='Power Consumption',
+                xaxis=dict(tickangle=30),
+                legend=dict(x=0, y=1),
+                height=600,
+                width=1000,
+                xaxis_showgrid=True,
+                yaxis_showgrid=True,
+                xaxis_gridcolor='rgba(0,0,0,0.1)',
+                yaxis_gridcolor='rgba(0,0,0,0.1)',
+                xaxis_griddash='dash',
+                yaxis_griddash='dash',
+                plot_bgcolor='black',
+                paper_bgcolor='black',
+                font=dict(color='white')
+            )
+            # Show the figure in Streamlit
+            st.plotly_chart(fig)
     st.subheader('Forecast vs Actuals')
-    evaluate_regression_models(x_test.index, y_test, arima_pred, sarimax_pred, step=5000)
-
+    evaluate_regression_models(x_test.index, y_test, arima_pred, sarimax_pred, step=750)
     # Select the last 'num_obs' observations
     num_obs = 10  # Adjust as needed
     x_test_subset = x_test.iloc[-num_obs:]  # Keep the original index
