@@ -108,7 +108,7 @@ with st.sidebar:
                         options = ['HOME','Box Plots' ,'Total Power Consumption Outlier Detection', 
                         'Data Distribution' , 'Time Series Analysis',
                         'Ad Fuller Report','ARIMA MODEL','SARIMA MODEL',
-                        'EVALUATE REGRESSION MODEL','TBATS MODEL','BI DASHBOARD'],
+                        'EVALUATE ARIMA-SARIMA MODEL','TBATS MODEL','BI DASHBOARD'],
                         icons = ['house-gear-fill','boxes','power','bar-chart-line',
                         'clock','file-earmark-bar-graph',
                         'file-earmark-bar-graph','file-earmark-bar-graph',
@@ -632,13 +632,13 @@ elif page == 'SARIMA MODEL':
 
 ####################################################################################################
 
-elif page == 'EVALUATE REGRESSION MODEL':
+elif page == 'EVALUATE ARIMA-SARIMA MODEL':
     Data_Ar=apply_transformations(data)
     
     x = Data_Ar.drop(['TotalPowerConsumption'], axis=1)
     y = Data_Ar['TotalPowerConsumption']
     x_train,x_test,y_train,y_test= train_test_split(x,y,test_size=0.2,shuffle=False)
-    st.header('📊 Evaluate Regression Models')
+    st.header('📊 EVALUATE ARIMA-SARIMA MODEL')
 
     # CALLING ARMIA MODEL
     path = '../Models/search_arima_model_auto.pkl'
