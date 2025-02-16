@@ -67,7 +67,7 @@ def apply_transformations(data):
 #x = data.drop(['TotalPowerConsumption'], axis=1)
 
 # Set page configuration
-st.set_page_config(page_title='Electric Power Consumption Forecasting', page_icon=':zap:', layout='wide', initial_sidebar_state='expanded')
+st.set_page_config(page_title='Forecasting Electric Power Consumption', page_icon=':zap:', layout='wide', initial_sidebar_state='expanded')
 
 # Set title
 st.markdown(
@@ -91,7 +91,7 @@ st.markdown(
     }
     </style>
     <div class="fixed-title">
-        <h1>⚡Electric Power Consumption Forecasting</h1>
+        <h1>⚡Forecasting Electric Power Consumption</h1>
     </div>
     """,
     unsafe_allow_html=True
