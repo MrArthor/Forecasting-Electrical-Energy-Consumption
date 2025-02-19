@@ -3,11 +3,14 @@
 <!-- build 20243.25.0114.1153                               -->
 <workbook original-version='18.1' source-build='2024.3.3 (20243.25.0114.1153)' source-platform='win' version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
   <document-format-change-manifest>
+    <AccessibleZoneTabOrder />
     <AnimationOnByDefault />
+    <AutoCreateAndUpdateDSDPhoneLayouts />
     <MarkAnimation />
     <ObjectModelEncapsulateLegacy />
     <ObjectModelTableType />
     <SchemaViewerObjectModel />
+    <SetMembershipControl />
     <SheetIdentifierTracking />
     <WindowsPersistSimpleIdentifiers />
   </document-format-change-manifest>
@@ -20,7 +23,7 @@
       <connection class='federated'>
         <named-connections>
           <named-connection caption='expanded_dataset' name='textscan.1iywwib099qgxr181zw3i1hexcu3'>
-            <connection class='textscan' directory='D:/OneDrive/Codes/CDAC_Project_Work/DataSet' filename='expanded_dataset.csv' password='' server='' />
+            <connection class='textscan' directory='D:/OneDrive/Codes/Github/Forecasting-Electrical-Energy-Consumption/DataSet' filename='expanded_dataset.csv' password='' server='' />
           </named-connection>
         </named-connections>
         <relation connection='textscan.1iywwib099qgxr181zw3i1hexcu3' name='expanded_dataset.csv' table='[expanded_dataset#csv]' type='table'>
@@ -311,6 +314,59 @@
       <simple-id uuid='{58BA51C5-DCAF-4401-AAF4-61FF416A6852}' />
     </worksheet>
   </worksheets>
+  <dashboards>
+    <dashboard enable-sort-zone-taborder='true' name='Dashboard 1'>
+      <style />
+      <size maxheight='800' maxwidth='1000' minheight='800' minwidth='1000' />
+      <zones>
+        <zone h='100000' id='6' type-v2='layout-basic' w='100000' x='0' y='0'>
+          <zone h='98000' id='7' param='vert' type-v2='layout-flow' w='98400' x='800' y='1000'>
+            <zone h='5250' id='9' type-v2='title' w='98400' x='800' y='1000'>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='4' />
+              </zone-style>
+            </zone>
+          </zone>
+          <zone-style>
+            <format attr='border-color' value='#000000' />
+            <format attr='border-style' value='none' />
+            <format attr='border-width' value='0' />
+            <format attr='margin' value='8' />
+          </zone-style>
+        </zone>
+      </zones>
+      <devicelayouts>
+        <devicelayout auto-generated='true' name='Phone'>
+          <size maxheight='700' minheight='700' sizing-mode='vscroll' />
+          <zones>
+            <zone h='100000' id='11' type-v2='layout-basic' w='100000' x='0' y='0'>
+              <zone h='98000' id='10' param='vert' type-v2='layout-flow' w='98400' x='800' y='1000'>
+                <zone h='5250' id='9' type-v2='title' w='98400' x='800' y='1000'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+              </zone>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='8' />
+              </zone-style>
+            </zone>
+          </zones>
+        </devicelayout>
+      </devicelayouts>
+      <simple-id uuid='{43BCAACB-2AB5-45CC-8099-74EEEEEEBC7E}' />
+    </dashboard>
+  </dashboards>
   <windows source-height='30'>
     <window class='worksheet' name='Zone Energy Consumption Trend'>
       <cards>
@@ -349,7 +405,7 @@
       </viewpoint>
       <simple-id uuid='{E65C7BC0-B62A-4688-9DA5-8AB998E9125A}' />
     </window>
-    <window class='worksheet' maximized='true' name='Sheet 2'>
+    <window class='worksheet' name='Sheet 2'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -372,8 +428,37 @@
       </cards>
       <simple-id uuid='{903FB1E6-33D6-4FDD-8834-93BED5FD08D0}' />
     </window>
+    <window class='dashboard' maximized='true' name='Dashboard 1'>
+      <viewpoints />
+      <active id='-1' />
+      <simple-id uuid='{2C7814DC-E78E-4C49-A0EF-7CB769C4D120}' />
+    </window>
   </windows>
   <thumbnails>
+    <thumbnail height='192' name='Dashboard 1' width='192'>
+      iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAACXBIWXMAAA7DAAAOwwHHb6hk
+      AAAEVUlEQVR4nO3Z30/VdRzH8deRo1HBIVFCoITyR0j+AJXRtNZaf2B33fUHdNG6yaZtrGIa
+      lpBgokP5EUMCURYqChr47aadTV1uuRkXz+fj6nu+23l/vue78/zufHZKRVEUkaC2bPYFSJvJ
+      AIRmAEIzAKE9E0D/mW8ydOFCfjj7c563O16eHs65KwvV16dOffvCF/F9f3/1eGn+93z2+Rcv
+      PEv6L8pPn1jbKOXT3t7cnb+SgaGJvLujyM2lP1PZ0Zp3muszNHo1r9ZvT8fryczUeGqWJ/Ne
+      d28e3l/OxYu/plxbyaEDe3J5ZDgraxs5cqw3t29MVme01j3Owv3k+sRMPjy6L2PXZzO7cLu6
+      /tKdB2lteuN/vQni+tefQJWWjqwszqZ5V0vKW8o5f34ws+OX8vCVxhzu2p8kaWvfk76u1gyO
+      TGbbaw3p6Tmam1PjmRn/JWt1Hek7djADP557YsbKrdmcOTuaTz4+kYGfhtLX15u3d+2srru/
+      sys1pdLL/+RSnhPA1KWR7O48mNOnv8v7R7rT1FhJ++ET6d5dyZdffZ0kKdeUU0pSFEVK/3xp
+      HxdFdWiRIkXyxIwk+eDkR6ndWpNSqVR9v7QZSk//ETYyNJj10tbUNexM596OTFz9LXdWH6Wo
+      qc2+tsZcm76Rcm1dDrzVkMX1SnbX/5Vri+sp7v2RldVHaWhqy972llweGc691Y10H+/N3MRY
+      dUZna33ult9M6/ba3JqbzuTcUjaK5GTf8STJ+Nhopmfn09TUnEM9PdnmNl0v0TMBSCQ+X4Vm
+      AEIzAKEZgNAMQGgGIDQDEJoBCM0AhGYAQjMAoRmA0AxAaAYgNAMQmgEIzQCEZgBCMwChGYDQ
+      DEBoBiA0AxCaAQjNAIRmAEIzAKEZgNAMQGgGIDQDEJoBCM0AhGYAQjMAoRmA0AxAaAYgNAMQ
+      mgEIzQCEZgBCMwChGYDQDEBoBiA0AxCaAQjNAIRmAEIzAKEZgNAMQGgGIDQDEJoBCM0AhGYA
+      QjMAoRmA0AxAaAYgNAMQmgEIzQCEZgBCMwChGYDQDEBoBiA0AxCaAQjNAIRmAEIzAKEZgNAM
+      QGgGIDQDEJoBCM0AhGYAQjMAoRmA0AxAaAYgNAMQmgEIzQCEZgBCMwChGYDQDEBoBiA0AxCa
+      AQjNAIRmAEIzAKEZgNAMQGgGIDQDEJoBCM0AhGYAQjMAoRmA0AxAaAYgNAMQmgEIzQCEZgBC
+      MwChGYDQDEBoBiA0AxCaAQjNAIRmAEIzAKEZgNAMQGgGIDQDEJoBCM0AhGYAQjMAoRmA0AxA
+      aAYgNAMQmgEIzQCEZgBCMwChGYDQDEBoBiA0AxCaAQjNAIRmAEIzAKEZgNAMQGgGIDQDEJoB
+      CM0AhGYAQjMAoRmA0AxAaAYgNAMQmgEIzQCEZgBCMwChGYDQDEBoBiA0AxCaAQjNAIRmAEIz
+      AKEZgNAMQGgGIDQDEJoBCM0AhGYAQjMAoRmA0AxAaH8DdcrIxY6qwQkAAAAASUVORK5CYII=
+    </thumbnail>
     <thumbnail height='24' name='Sheet 2' width='64'>
       iVBORw0KGgoAAAANSUhEUgAAAEAAAAAYCAYAAABKtPtEAAAACXBIWXMAAA7DAAAOwwHHb6hk
       AAACUElEQVRYhe2YT0iTcRzGH/XtUrtPQrI6FgX1vpmKK73UQUgP1mHSpEbMiwWmMQInZOBJ

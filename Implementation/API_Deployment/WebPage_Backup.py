@@ -493,7 +493,7 @@ elif page == 'ARIMA MODEL':
 
     st.header('📊 ARIMA Model')
 
-    path = '../Models/search_sarima_model_auto.pkl'
+    path = '../Models/search_arima_model_auto.pkl'
     if os.path.exists(path):
         st.text("Model already trained and saved at : ")
         st.text(path)
