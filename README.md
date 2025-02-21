@@ -70,7 +70,7 @@ README.md             # This file.
 Launch the Streamlit application by running:
 
 ```bash
-streamlit run Implementation/WebPage_Backup.py
+streamlit run Implementation/API_Deployment/WebPage_Backup.py
 ```
 
 This command opens the interactive dashboard in your default web browser. Use the sidebar menu to navigate between different pages such as data visualizations, forecasting models, and the BI dashboard.
@@ -79,7 +79,7 @@ This command opens the interactive dashboard in your default web browser. Use th
 
 - **HOME:** Provides an introduction with a brief overview and an introductory video.
 - **Box Plots & Data Distribution:** Visualize raw and transformed data to understand distributions and detect outliers.
-- **Time Series Analysis:** Analyze trends, seasonal patterns, and perform stationarity testing.
+- **Time Series Analysis:** Analyze trends, and seasonal patterns, and perform stationarity testing.
 - **Forecasting Models:** Train and evaluate ARIMA, SARIMA, and TBATS models. View residuals, metrics, and forecasts compared to actual values.
 - **BI Dashboard:** Access an embedded Power BI dashboard for advanced business insights.
 
